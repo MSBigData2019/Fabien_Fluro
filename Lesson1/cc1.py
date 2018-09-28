@@ -60,8 +60,11 @@ def number2digits(number):
 #English is translated to Pig Latin by taking the first letter of every word,
 #moving it to the end of the word and adding 'ay'
 def pigLatin(text):
-  return
-
+    words = text.split(' ')
+    output = ''
+    for w in words:
+      output = w[0]   
+    return output
 
 #write fizbuzz programm
 def fizbuzz():
