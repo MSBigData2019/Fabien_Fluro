@@ -5,17 +5,24 @@ import unittest
 # that is n copies of the original string.
 
 def string_times(string, n):
+    #return n * string;
+    
     output = ''
     for i in range(n):
         output += string
         
     return output
 
+
 # Given an array of ints, return True if one of the first 4 elements
 # in the array is a 9. The array length may be less than 4.
 def array_front9(nums):
     if(len(nums) >= 4):
         return 9 in nums[:4] 
+    else :
+        return False
+    
+    
 
 # Given a string, return the count of the number of times
 # that a substring length 2 appears  in the string and also as
@@ -43,6 +50,10 @@ def occurences(text):
 #Write a program that maps a list of words into a list of
 #integers representing the lengths of the correponding words.
 def length_words(array):
+    
+    #return map(len, array)
+    #[len(x) for x in array]
+    
     arrayOut = []
     
     for item in array:
@@ -53,8 +64,8 @@ def length_words(array):
 
 #Write a function that takes a number and returns a list of its digits.
 def number2digits(number):
-    
-  return list(str(number))
+    #[int(z) for z in number]
+  return list(int(str(number)))
 
 #Write function that translates a text to Pig Latin and back.
 #English is translated to Pig Latin by taking the first letter of every word,
@@ -63,8 +74,10 @@ def pigLatin(text):
     words = text.split(' ')
     output = ''
     for w in words:
-      output = w[0]   
-    return output
+      w2 = w[1:] + w[0]
+      w2 += 'ay'
+      output += w2 + ' '
+    return output[:-1]
 
 #write fizbuzz programm
 def fizbuzz():
