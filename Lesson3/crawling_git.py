@@ -29,7 +29,7 @@ def _extract_nickname_from_string(text):
     return text.split(" (")[0]
 
 def _get_average(col):
-    return round(sum(col)/len(col), 0)
+    return round(sum(col)/len(col), 1)
 
 def get_contributors(page_url):
     soup = _get_soup(page_url)
