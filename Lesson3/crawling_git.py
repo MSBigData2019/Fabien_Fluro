@@ -8,10 +8,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 page_url = 'https://gist.github.com/paulmillr/2657075'
-#token = 'a286d5bb7d3ffcc7f8cd298bc067d967f7fc7da7'
-
-#https://api.github.com/users/fabpot/repos
-#stargazers_count
+token = 'a286d5bb7d3ffcc7f8cd298bc067d967f7fc7da7'
 
 def _handle_request_result_and_build_soup(request_result):
   if request_result.status_code == 200:
@@ -41,10 +38,9 @@ def get_contributors(page_url):
     nicknames = list(map(lambda tr: _extract_nickname_from_string(tr.find_all("td")[0].text), trs))
     return nicknames
 
-
-
 def get_git_stars_score(nickname):
-    r = requests.get('https://api.github.com/users/' + nickname + '/repos')
+    headers = {'Authorization': 'token ' + token}
+    r = requests.get('https://api.github.com/users/' + nickname + '/repos', headers=headers)
     if(r.ok):
         json_content = json.loads(r.text or r.content)
         df = pd.DataFrame(json_content)
