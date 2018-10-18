@@ -44,7 +44,7 @@ def get_contributors(page_url):
 
 def get_git_stars_score(nickname):
     headers = {'Authorization': 'token ' + token}
-    r = requests.get('https://api.github.com/users/' + nickname + '/repos', headers=headers)
+    r = requests.get('https://api.github.com/users/' + nickname + '/repos?per_page=1000', headers=headers)
   
     if(r.ok):
         json_content = json.loads(r.text or r.content)
