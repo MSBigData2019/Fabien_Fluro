@@ -11,7 +11,7 @@ page_url = 'https://gist.github.com/paulmillr/2657075'
 token = 'a286d5bb7d3ffcc7f8cd298bc067d967f7fc7da7'
 
 take = 256
-
+take_repo = 30
 #thejameskyle
 
 def _handle_request_result_and_build_soup(request_result):
@@ -44,16 +44,22 @@ def get_contributors(page_url):
 
 def get_git_stars_score(nickname):
     headers = {'Authorization': 'token ' + token}
-    r = requests.get('https://api.github.com/users/' + nickname + '/repos?per_page=1000', headers=headers)
-  
-    if(r.ok):
-        json_content = json.loads(r.text or r.content)
-        dftemp = pd.DataFrame(json_content)
-        if "stargazers_count" in dftemp.columns:
-            return _get_average(dftemp["stargazers_count"])
-        else: 
-            return 0
-
+    repo_count = take_repo
+    dftemp = pd.DataFrame()
+    page = 0
+    while repo_count == take_repo:
+        page += 1
+        r = requests.get('https://api.github.com/users/' + nickname + '/repos?page=' + str(page) + '&per_page='+str(take_repo), headers=headers)
+        if(r.ok):
+            json_content = json.loads(r.text or r.content)
+            repo_count = len(json_content)
+            dftemp = pd.concat([dftemp, pd.DataFrame(json_content)])
+    if "stargazers_count" in dftemp.columns:
+        return _get_average(dftemp["stargazers_count"])
+    else: 
+        return 0
+    
+    
 df = pd.DataFrame({ 'login': get_contributors(page_url)})
 scores = []
 
